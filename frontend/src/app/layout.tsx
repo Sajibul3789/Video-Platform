@@ -19,7 +19,7 @@ export default function RootLayout({
       <body suppressHydrationWarning>
         <ToastProvider />
         <Navbar />
-        <main className="min-h-screen bg-white dark:bg-gray-950">
+        <main className="min-h-screen bg-[#f0f2f5] dark:bg-gray-950">
           {children}
         </main>
         <Footer />
