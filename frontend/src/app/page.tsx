@@ -5,14 +5,11 @@ import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   FaPlay,
-  FaEye,
   FaUpload,
   FaThumbsUp,
   FaComment,
   FaShare,
   FaBookmark,
-  FaUser,
-  FaClock,
   FaEllipsisH,
   FaUsers,
   FaFire,
@@ -20,11 +17,7 @@ import {
   FaNewspaper,
   FaRocket,
   FaPlus,
-  FaSearch,
   FaBell,
-  FaYoutube,
-  FaFacebook,
-  FaInstagram,
 } from "react-icons/fa";
 import { formatViews, formatDate } from "@/lib/utils";
 import api from "@/lib/api";
@@ -130,281 +123,258 @@ export default function Home() {
     return (
       <div className="flex items-center justify-center min-h-[60vh]">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500 mx-auto"></div>
-          <p className="mt-4 text-gray-500">Loading...</p>
+          <div className="animate-spin rounded-full h-10 w-10 border-t-2 border-b-2 border-white/30 mx-auto"></div>
+          <p className="mt-4 text-white/30 text-sm">Loading...</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-[#f8f9fa] dark:bg-[#0a0a0a]">
-      <div className="max-w-full px-4 sm:px-6 lg:px-8 py-4">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
-          {/* Left Sidebar */}
-          <div className="lg:col-span-3 space-y-4">
-            {/* User Card */}
-            <div className="bg-white dark:bg-[#181818] rounded-xl p-4">
-              {isAuthenticated ? (
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-full bg-[#1877f2] flex items-center justify-center text-white font-bold">
-                    {user?.name?.charAt(0).toUpperCase() || "U"}
-                  </div>
-                  <div>
-                    <p className="font-medium text-sm">{user?.name}</p>
-                    <p className="text-xs text-gray-500">{user?.email}</p>
-                    {user?.isAdmin && (
-                      <span className="text-xs bg-[#1877f2] text-white px-2 rounded-full">
-                        Admin
-                      </span>
-                    )}
-                  </div>
-                </div>
-              ) : (
-                <div className="text-center">
-                  <p className="text-gray-600 mb-3 text-sm">
-                    Join the community
-                  </p>
-                  <Link href="/register">
-                    <button className="bg-[#1877f2] hover:bg-[#166fe5] text-white px-6 py-2 rounded-full text-sm font-medium transition">
-                      Sign Up
-                    </button>
-                  </Link>
-                </div>
-              )}
-            </div>
-
-            {/* Trending */}
-            <div className="bg-white dark:bg-[#181818] rounded-xl p-4">
-              <h3 className="font-semibold text-sm mb-3 flex items-center gap-2">
-                <FaFire className="text-[#ff4500]" />
-                Trending
-              </h3>
-              {[
-                "#VideoHub",
-                "#CreatorCommunity",
-                "#ViralVideos",
-                "#ContentCreators",
-              ].map((tag, i) => (
-                <div
-                  key={tag}
-                  className="flex items-center gap-3 text-sm hover:bg-gray-50 dark:hover:bg-[#2a2a2a] p-2 rounded-lg cursor-pointer transition"
-                >
-                  <span className="text-gray-400 font-medium">{i + 1}</span>
-                  <span>{tag}</span>
-                </div>
-              ))}
-            </div>
-
-            {/* Suggested */}
-            <div className="bg-white dark:bg-[#181818] rounded-xl p-4">
-              <h3 className="font-semibold text-sm mb-3 flex items-center gap-2">
-                <FaUsers className="text-[#1877f2]" />
-                Suggested
-              </h3>
-              {["Creator 1", "Creator 2", "Creator 3"].map((name) => (
-                <div key={name} className="flex items-center gap-3 mb-2">
-                  <div className="w-8 h-8 rounded-full bg-[#e4e6eb] dark:bg-[#2a2a2a] flex items-center justify-center text-xs font-bold">
-                    {name.charAt(0)}
-                  </div>
-                  <span className="text-sm flex-1">{name}</span>
-                  <button className="text-xs bg-[#1877f2] text-white px-3 py-1 rounded-full hover:bg-[#166fe5] transition">
-                    Follow
-                  </button>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Main Feed */}
-          <div className="lg:col-span-6">
-            {/* Stories */}
-            <div className="bg-white dark:bg-[#181818] rounded-xl p-4 mb-4 overflow-x-auto scrollbar-hide">
-              <div className="flex gap-6">
-                {isAuthenticated && (
-                  <div className="flex flex-col items-center cursor-pointer">
-                    <div className="story-circle">
-                      <div className="story-circle-inner bg-[#1877f2]">
-                        <FaPlus className="text-white" />
-                      </div>
-                    </div>
-                    <span className="story-name">Create</span>
-                  </div>
-                )}
-                {["Story 1", "Story 2", "Story 3", "Story 4"].map((story) => (
-                  <div
-                    key={story}
-                    className="flex flex-col items-center cursor-pointer"
-                  >
-                    <div className="story-circle">
-                      <div className="story-circle-inner bg-gray-300 dark:bg-[#2a2a2a]">
-                        {story.charAt(0)}
-                      </div>
-                    </div>
-                    <span className="story-name">{story}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Create Post */}
-            {isAuthenticated && (
-              <div className="create-bar mb-4">
-                <div className="w-8 h-8 rounded-full bg-[#1877f2] flex items-center justify-center text-white font-bold text-sm">
+    <div className="min-h-screen w-full px-4 sm:px-6 lg:px-8 py-4">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 w-full max-w-full">
+        {/* Left Sidebar */}
+        <div className="lg:col-span-3 space-y-4 w-full">
+          {/* User Card */}
+          <div className="sidebar-card w-full">
+            {isAuthenticated ? (
+              <div className="flex items-center gap-4">
+                <div className="w-12 h-12 rounded-full bg-white/15 flex items-center justify-center text-white font-semibold text-lg border border-white/10">
                   {user?.name?.charAt(0).toUpperCase() || "U"}
                 </div>
-                <div
-                  className="create-input"
-                  onClick={() => (window.location.href = "/upload")}
-                >
-                  What's on your mind?
+                <div>
+                  <p className="font-semibold text-white">{user?.name}</p>
+                  <p className="text-sm text-white/40">{user?.email}</p>
+                  {user?.isAdmin && (
+                    <span className="text-xs bg-white/10 text-white/60 px-2 py-0.5 rounded-full inline-block mt-1">
+                      Admin
+                    </span>
+                  )}
                 </div>
-                {user?.isAdmin && (
-                  <button
-                    onClick={() => (window.location.href = "/upload")}
-                    className="bg-[#1877f2] hover:bg-[#166fe5] text-white px-4 py-1.5 rounded-full text-sm font-medium transition"
-                  >
-                    <FaUpload className="inline mr-1" /> Upload
+              </div>
+            ) : (
+              <div className="text-center py-2">
+                <p className="text-white/50 mb-4">Join the community</p>
+                <Link href="/register">
+                  <button className="btn-glass btn-glass-primary px-8 py-2.5">
+                    Sign Up
                   </button>
-                )}
+                </Link>
               </div>
             )}
-
-            {/* Tabs */}
-            <div className="bg-white dark:bg-[#181818] rounded-xl p-1 mb-4">
-              <div className="flex rounded-lg overflow-hidden">
-                {[
-                  { id: "all", label: "All", icon: FaRocket },
-                  { id: "videos", label: "Videos", icon: FaVideo },
-                  { id: "posts", label: "Posts", icon: FaNewspaper },
-                ].map((tab) => {
-                  const Icon = tab.icon;
-                  const isActive = activeTab === tab.id;
-                  return (
-                    <button
-                      key={tab.id}
-                      onClick={() => setActiveTab(tab.id as typeof activeTab)}
-                      className={`flex-1 flex items-center justify-center gap-2 px-4 py-2 text-sm font-medium rounded-lg transition ${
-                        isActive
-                          ? "bg-[#1877f2] text-white"
-                          : "text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-[#2a2a2a]"
-                      }`}
-                    >
-                      <Icon className={isActive ? "text-white" : ""} />
-                      {tab.label}
-                    </button>
-                  );
-                })}
-              </div>
-            </div>
-
-            {/* Feed */}
-            <AnimatePresence>
-              <div className="space-y-4">
-                {filteredContent.length === 0 ? (
-                  <div className="bg-white dark:bg-[#181818] rounded-xl p-12 text-center">
-                    <div className="text-5xl mb-4">📝</div>
-                    <h3 className="text-lg font-semibold mb-2">
-                      No Content Yet
-                    </h3>
-                    <p className="text-gray-500 text-sm">Check back later</p>
-                  </div>
-                ) : (
-                  filteredContent.map((item, index) => (
-                    <motion.div
-                      key={item.id}
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: index * 0.05 }}
-                    >
-                      {item.type === "video" ? (
-                        <VideoCard
-                          video={item as Video}
-                          likedItems={likedItems}
-                          savedItems={savedItems}
-                          onLike={handleLike}
-                          onSave={handleSave}
-                          isAuthenticated={isAuthenticated}
-                        />
-                      ) : (
-                        <PostCard
-                          post={item as Post}
-                          likedItems={likedItems}
-                          savedItems={savedItems}
-                          onLike={handleLike}
-                          onSave={handleSave}
-                          isAuthenticated={isAuthenticated}
-                        />
-                      )}
-                    </motion.div>
-                  ))
-                )}
-              </div>
-            </AnimatePresence>
           </div>
 
-          {/* Right Sidebar */}
-          <div className="lg:col-span-3 space-y-4">
-            {/* Social Links */}
-            <div className="bg-white dark:bg-[#181818] rounded-xl p-4">
-              <div className="flex items-center justify-around">
-                <FaYoutube className="text-2xl text-red-600 cursor-pointer hover:scale-110 transition" />
-                <FaFacebook className="text-2xl text-[#1877f2] cursor-pointer hover:scale-110 transition" />
-                <FaInstagram className="text-2xl text-[#e4405f] cursor-pointer hover:scale-110 transition" />
+          {/* Trending */}
+          <div className="sidebar-card w-full">
+            <h3 className="sidebar-title flex items-center gap-2">
+              <FaFire className="text-white/40" />
+              Trending
+            </h3>
+            {[
+              "#VideoHub",
+              "#CreatorCommunity",
+              "#ViralVideos",
+              "#ContentCreators",
+            ].map((tag, i) => (
+              <div key={tag} className="list-item">
+                <span className="list-item-number">{i + 1}</span>
+                <span className="list-item-text">{tag}</span>
               </div>
-            </div>
+            ))}
+          </div>
 
-            {/* Recommended */}
-            <div className="bg-white dark:bg-[#181818] rounded-xl p-4">
-              <h3 className="font-semibold text-sm mb-3">Recommended</h3>
-              {videos.slice(0, 3).map((video) => (
-                <Link key={video.id} href={`/video/${video.id}`}>
-                  <div className="flex gap-3 mb-3 hover:bg-gray-50 dark:hover:bg-[#2a2a2a] p-2 rounded-lg transition cursor-pointer">
-                    <div className="w-20 h-12 bg-gray-200 dark:bg-[#2a2a2a] rounded-lg overflow-hidden flex-shrink-0">
-                      {video.thumbnailUrl && (
-                        <img
-                          src={video.thumbnailUrl}
-                          alt={video.title}
-                          className="w-full h-full object-cover"
-                        />
-                      )}
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <p className="text-sm font-medium line-clamp-2">
-                        {video.title}
-                      </p>
-                      <p className="text-xs text-gray-500">
-                        {video.user?.name}
-                      </p>
-                      <p className="text-xs text-gray-500">
-                        {formatViews(video.views)} views
-                      </p>
+          {/* Suggested */}
+          <div className="sidebar-card w-full">
+            <h3 className="sidebar-title flex items-center gap-2">
+              <FaUsers className="text-white/40" />
+              Suggested
+            </h3>
+            {["Creator 1", "Creator 2", "Creator 3"].map((name) => (
+              <div key={name} className="flex items-center gap-3 mb-3 w-full">
+                <div className="w-9 h-9 rounded-full bg-white/8 flex items-center justify-center text-white/60 text-sm font-medium">
+                  {name.charAt(0)}
+                </div>
+                <span className="text-sm text-white/60 flex-1">{name}</span>
+                <button className="btn-glass text-xs py-1.5 px-4">
+                  Follow
+                </button>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Main Feed */}
+        <div className="lg:col-span-6 space-y-4 w-full">
+          {/* Stories */}
+          <div className="sidebar-card w-full overflow-x-auto scrollbar-hide">
+            <div className="flex gap-6">
+              {isAuthenticated && (
+                <div className="flex flex-col items-center cursor-pointer">
+                  <div className="story-circle">
+                    <div className="story-circle-inner bg-white/8">
+                      <FaPlus className="text-white/40" />
                     </div>
                   </div>
-                </Link>
+                  <span className="story-name">Create</span>
+                </div>
+              )}
+              {["Story 1", "Story 2", "Story 3", "Story 4"].map((story) => (
+                <div
+                  key={story}
+                  className="flex flex-col items-center cursor-pointer"
+                >
+                  <div className="story-circle">
+                    <div className="story-circle-inner bg-white/8 text-white/60">
+                      {story.charAt(0)}
+                    </div>
+                  </div>
+                  <span className="story-name">{story}</span>
+                </div>
               ))}
             </div>
+          </div>
 
-            {/* Stats */}
-            <div className="bg-white dark:bg-[#181818] rounded-xl p-4">
-              <h3 className="font-semibold text-sm mb-3">Community</h3>
-              <div className="space-y-2 text-sm">
-                <div className="flex justify-between">
-                  <span className="text-gray-500">Videos</span>
-                  <span className="font-medium">{videos.length}</span>
+          {/* Create Post */}
+          {isAuthenticated && (
+            <div className="create-bar w-full">
+              <div className="w-10 h-10 rounded-full bg-white/12 flex items-center justify-center text-white font-semibold text-sm">
+                {user?.name?.charAt(0).toUpperCase() || "U"}
+              </div>
+              <div
+                className="create-input"
+                onClick={() => (window.location.href = "/upload")}
+              >
+                What's on your mind?
+              </div>
+              {user?.isAdmin && (
+                <button
+                  onClick={() => (window.location.href = "/upload")}
+                  className="btn-glass btn-glass-primary"
+                >
+                  <FaUpload className="mr-1.5" /> Upload
+                </button>
+              )}
+            </div>
+          )}
+
+          {/* Tabs */}
+          <div className="tab-glass w-full">
+            {[
+              { id: "all", label: "All", icon: FaRocket },
+              { id: "videos", label: "Videos", icon: FaVideo },
+              { id: "posts", label: "Posts", icon: FaNewspaper },
+            ].map((tab) => {
+              const Icon = tab.icon;
+              const isActive = activeTab === tab.id;
+              return (
+                <button
+                  key={tab.id}
+                  onClick={() => setActiveTab(tab.id as typeof activeTab)}
+                  className={`tab-item ${isActive ? "active" : ""}`}
+                >
+                  <Icon className={isActive ? "text-white" : "text-white/30"} />
+                  {tab.label}
+                </button>
+              );
+            })}
+          </div>
+
+          {/* Feed */}
+          <AnimatePresence>
+            <div className="space-y-4 w-full">
+              {filteredContent.length === 0 ? (
+                <div className="glass p-12 text-center w-full">
+                  <div className="text-5xl mb-4 opacity-20">📝</div>
+                  <h3 className="text-xl font-semibold text-white/50 mb-2">
+                    No Content
+                  </h3>
+                  <p className="text-white/20">Check back later</p>
                 </div>
-                <div className="flex justify-between">
-                  <span className="text-gray-500">Posts</span>
-                  <span className="font-medium">{posts.length}</span>
+              ) : (
+                filteredContent.map((item, index) => (
+                  <motion.div
+                    key={item.id}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: index * 0.05 }}
+                    className="w-full"
+                  >
+                    {item.type === "video" ? (
+                      <VideoCard
+                        video={item as Video}
+                        likedItems={likedItems}
+                        savedItems={savedItems}
+                        onLike={handleLike}
+                        onSave={handleSave}
+                        isAuthenticated={isAuthenticated}
+                      />
+                    ) : (
+                      <PostCard
+                        post={item as Post}
+                        likedItems={likedItems}
+                        savedItems={savedItems}
+                        onLike={handleLike}
+                        onSave={handleSave}
+                        isAuthenticated={isAuthenticated}
+                      />
+                    )}
+                  </motion.div>
+                ))
+              )}
+            </div>
+          </AnimatePresence>
+        </div>
+
+        {/* Right Sidebar */}
+        <div className="lg:col-span-3 space-y-4 w-full">
+          {/* Recommended */}
+          <div className="sidebar-card w-full">
+            <h3 className="sidebar-title">Recommended</h3>
+            {videos.slice(0, 3).map((video) => (
+              <Link key={video.id} href={`/video/${video.id}`}>
+                <div className="flex gap-3 mb-4 hover:bg-white/5 p-2 rounded-lg transition cursor-pointer w-full">
+                  <div className="w-24 h-14 bg-white/5 rounded-lg overflow-hidden flex-shrink-0">
+                    {video.thumbnailUrl && (
+                      <img
+                        src={video.thumbnailUrl}
+                        alt={video.title}
+                        className="w-full h-full object-cover"
+                      />
+                    )}
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <p className="text-sm text-white/80 font-medium line-clamp-2">
+                      {video.title}
+                    </p>
+                    <p className="text-xs text-white/40 mt-1">
+                      {video.user?.name}
+                    </p>
+                    <p className="text-xs text-white/30">
+                      {formatViews(video.views)} views
+                    </p>
+                  </div>
                 </div>
-                <div className="flex justify-between">
-                  <span className="text-gray-500">Total Views</span>
-                  <span className="font-medium">
-                    {videos
-                      .reduce((acc, v) => acc + v.views, 0)
-                      .toLocaleString()}
-                  </span>
-                </div>
+              </Link>
+            ))}
+          </div>
+
+          {/* Stats */}
+          <div className="sidebar-card w-full">
+            <h3 className="sidebar-title">Community Stats</h3>
+            <div className="space-y-2">
+              <div className="stat-item">
+                <span className="stat-label">Total Videos</span>
+                <span className="stat-value">{videos.length}</span>
+              </div>
+              <div className="stat-item">
+                <span className="stat-label">Total Posts</span>
+                <span className="stat-value">{posts.length}</span>
+              </div>
+              <div className="stat-item">
+                <span className="stat-label">Total Views</span>
+                <span className="stat-value">
+                  {videos.reduce((acc, v) => acc + v.views, 0).toLocaleString()}
+                </span>
               </div>
             </div>
           </div>
@@ -434,14 +404,14 @@ function VideoCard({
   const isSaved = savedItems.has(video.id);
 
   return (
-    <div className="video-card">
+    <div className="video-card w-full">
       <Link href={`/video/${video.id}`}>
         <div className="video-thumbnail">
           {video.thumbnailUrl ? (
             <img src={video.thumbnailUrl} alt={video.title} />
           ) : (
             <div className="w-full h-full flex items-center justify-center">
-              <FaPlay className="text-3xl text-gray-400" />
+              <FaPlay className="text-3xl text-white/10" />
             </div>
           )}
           <div className="video-duration">12:34</div>
@@ -451,7 +421,7 @@ function VideoCard({
       <div className="video-info">
         <div className="flex gap-3">
           <div className="flex-shrink-0 mt-1">
-            <div className="w-8 h-8 rounded-full bg-[#1877f2] flex items-center justify-center text-white font-bold text-xs">
+            <div className="w-9 h-9 rounded-full bg-white/12 flex items-center justify-center text-white/70 font-semibold text-sm">
               {video.user?.name?.charAt(0).toUpperCase() || "U"}
             </div>
           </div>
@@ -466,18 +436,18 @@ function VideoCard({
               <span>{formatDate(video.createdAt)}</span>
             </div>
           </div>
-          <button className="flex-shrink-0 p-1 hover:bg-gray-100 dark:hover:bg-[#2a2a2a] rounded-full transition">
-            <FaEllipsisH className="text-gray-500 text-sm" />
+          <button className="flex-shrink-0 p-1.5 hover:bg-white/5 rounded-full transition">
+            <FaEllipsisH className="text-white/30 text-sm" />
           </button>
         </div>
 
         {video.description && (
-          <p className="mt-2 text-sm text-gray-600 dark:text-gray-400 line-clamp-2 ml-11">
+          <p className="mt-2 text-sm text-white/50 line-clamp-2 ml-12">
             {video.description}
           </p>
         )}
 
-        <div className="flex items-center justify-between mt-3 pt-3 border-t border-gray-100 dark:border-[#2a2a2a]">
+        <div className="flex items-center justify-between mt-3 pt-3 border-t border-white/5">
           <div className="flex items-center gap-1">
             <button
               onClick={() => isAuthenticated && onLike(video.id)}
@@ -530,7 +500,7 @@ function PostCard({
   const isSaved = savedItems.has(post.id);
 
   return (
-    <div className="post-card">
+    <div className="post-card w-full">
       <div className="post-header">
         <div className="post-avatar">
           {post.user?.name?.charAt(0).toUpperCase() || "U"}
@@ -539,14 +509,12 @@ function PostCard({
           <p className="post-user-name">{post.user?.name}</p>
           <div className="flex items-center gap-2">
             <span className="post-time">{formatDate(post.createdAt)}</span>
-            <span className="text-gray-400">•</span>
-            <span className="text-xs bg-gray-200 dark:bg-[#2a2a2a] px-2 rounded-full text-gray-600 dark:text-gray-400">
-              Post
-            </span>
+            <span className="text-white/10">•</span>
+            <span className="badge-glass">Post</span>
           </div>
         </div>
-        <button className="ml-auto p-1 hover:bg-gray-100 dark:hover:bg-[#2a2a2a] rounded-full transition">
-          <FaEllipsisH className="text-gray-500" />
+        <button className="ml-auto p-1.5 hover:bg-white/5 rounded-full transition">
+          <FaEllipsisH className="text-white/30" />
         </button>
       </div>
 

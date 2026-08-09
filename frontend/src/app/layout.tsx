@@ -17,12 +17,12 @@ export default function RootLayout({
   return (
     <html lang="en" className="dark" suppressHydrationWarning>
       <body suppressHydrationWarning>
-        <ToastProvider />
-        <Navbar />
-        <main className="min-h-screen bg-[#f0f2f5] dark:bg-gray-950">
-          {children}
-        </main>
-        <Footer />
+        <div className="min-h-screen bg-[#0a0a0a]">
+          <ToastProvider />
+          <Navbar />
+          <main className="min-h-screen pt-4 max-w-full">{children}</main>
+          <Footer />
+        </div>
       </body>
     </html>
   );
