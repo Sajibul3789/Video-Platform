@@ -1,0 +1,224 @@
+# Dependencies
+node_modules/
+.pnp/
+.pnp.js
+.yarn/
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# Build outputs
+dist/
+build/
+out/
+.next/
+.nuxt/
+.vuepress/dist/
+.serverless/
+
+# Environment variables
+.env
+.env.local
+.env.production
+.env.development
+.env.test
+.env*.local
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+.pnpm-debug.log*
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+*.swp
+*.swo
+*~
+*.tmp
+
+# IDE files
+.vscode/
+.idea/
+*.iml
+.project
+.classpath
+.settings/
+*.sublime-*
+
+# Testing
+coverage/
+.nyc_output/
+.coveralls.yml
+
+# TypeScript
+*.tsbuildinfo
+dist/
+*.d.ts
+!*.d.ts.map
+
+# Prisma
+.prisma/
+prisma/*.db
+prisma/*.sqlite
+prisma/*.sqlite-journal
+
+# Uploads
+uploads/
+temp/
+uploads/
+
+# Cloudinary cache
+cloudinary/
+
+# Misc
+*.pem
+*.cert
+*.key
+.env.keys
+.cache
+.temp
+.tmp
+
+# Next.js specific
+.next/
+out/
+build/
+.vercel/
+.netlify/
+
+# Turbopack
+.turbo/
+
+# Dependency directories
+jspm_packages/
+
+# Optional npm cache directory
+.npm
+
+# Optional eslint cache
+.eslintcache
+
+# Optional stylelint cache
+.stylelintcache
+
+# Microbundle cache
+.rpt2_cache/
+.rts2_cache_cjs/
+.rts2_cache_es/
+.rts2_cache_umd/
+
+# Optional REPL history
+.node_repl_history
+
+# Output of 'npm pack'
+*.tgz
+
+# Yarn Integrity file
+.yarn-integrity
+
+# dotenv environment variables file
+.env.development.local
+.env.test.local
+.env.production.local
+.env.local
+
+# parcel-bundler cache
+.cache
+.parcel-cache
+
+# Next.js build output
+.next
+out
+
+# Nuxt.js build / generate output
+.nuxt
+dist
+
+# Gatsby files
+.cache/
+public
+
+# Storybook build output
+storybook-static
+
+# Strapi
+.strapi
+
+# Shopify
+.shopify
+
+# Firebase
+.firebase/
+
+# Vercel
+.vercel
+
+# Netlify
+.netlify
+
+# Expo
+.expo/
+
+# Sentry
+.sentryclirc
+
+# ESLint
+.eslintcache
+
+# Stylelint
+.stylelintcache
+
+# Prettier
+.prettiercache
+
+# TypeScript compiler output
+tsconfig.tsbuildinfo
+
+# Jest
+.coverage
+.nyc_output
+
+# Cypress
+cypress/videos/
+cypress/screenshots/
+cypress/downloads/
+
+# Playwright
+playwright-report/
+test-results/
+
+# Database files
+*.db
+*.sqlite
+*.sqlite3
+
+# Backend specific
+backend/node_modules/
+backend/dist/
+backend/.env
+backend/.env.local
+backend/uploads/
+backend/temp/
+backend/prisma/*.db
+backend/prisma/*.sqlite
+
+# Frontend specific
+frontend/node_modules/
+frontend/.next/
+frontend/out/
+frontend/dist/
+frontend/.env
+frontend/.env.local
+frontend/.turbo/
+
+# Generated files
+*.docx
+generate-docx.js
+video-platform-source.docx
+skills-lock.json
