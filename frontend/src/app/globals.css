@@ -11,6 +11,7 @@
 
     html {
         scroll-behavior: smooth;
+        -webkit-tap-highlight-color: transparent;
     }
 
     body {
@@ -18,75 +19,98 @@
         color: #ffffff;
         font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
         min-height: 100vh;
+        min-height: 100dvh;
+        overflow-x: hidden;
+        width: 100%;
+    }
+
+    @supports (-webkit-touch-callout: none) {
+        body {
+            min-height: -webkit-fill-available;
+        }
     }
 }
 
 @layer components {
 
-    /* Glass Card - with better contrast */
-    .glass {
-        background: rgba(255, 255, 255, 0.08);
+    /* Full Width Container */
+    .full-width {
+        width: 100%;
+        max-width: 100%;
+        padding: 0 16px;
+    }
+
+    @media (min-width: 768px) {
+        .full-width {
+            padding: 0 24px;
+        }
+    }
+
+    @media (min-width: 1024px) {
+        .full-width {
+            padding: 0 32px;
+        }
+    }
+
+    /* Modern Glass Card */
+    .glass-modern {
+        background: rgba(255, 255, 255, 0.05);
         backdrop-filter: blur(20px);
         -webkit-backdrop-filter: blur(20px);
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        border-radius: 16px;
-        transition: all 0.3s ease;
-    }
-
-    .glass:hover {
-        background: rgba(255, 255, 255, 0.12);
-        border-color: rgba(255, 255, 255, 0.15);
-    }
-
-    /* Video Card - Full width */
-    .video-card {
-        background: rgba(255, 255, 255, 0.06);
-        backdrop-filter: blur(16px);
-        -webkit-backdrop-filter: blur(16px);
         border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 16px;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .glass-modern:hover {
+        background: rgba(255, 255, 255, 0.08);
+        border-color: rgba(255, 255, 255, 0.12);
+    }
+
+    /* Video Card - YouTube Style */
+    .video-card-youtube {
+        background: #1a1a1a;
         border-radius: 12px;
         overflow: hidden;
         transition: all 0.3s ease;
-        width: 100%;
+        cursor: pointer;
     }
 
-    .video-card:hover {
-        background: rgba(255, 255, 255, 0.1);
-        transform: translateY(-2px);
-        border-color: rgba(255, 255, 255, 0.15);
+    .video-card-youtube:hover {
+        transform: scale(1.02);
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
     }
 
-    .video-thumbnail {
+    .video-thumbnail-youtube {
         position: relative;
         aspect-ratio: 16 / 9;
-        background: rgba(255, 255, 255, 0.05);
+        background: #2a2a2a;
         overflow: hidden;
-        width: 100%;
     }
 
-    .video-thumbnail img {
+    .video-thumbnail-youtube img {
         width: 100%;
         height: 100%;
         object-fit: cover;
     }
 
-    .video-duration {
+    .video-duration-badge {
         position: absolute;
         bottom: 8px;
         right: 8px;
-        background: rgba(0, 0, 0, 0.8);
+        background: rgba(0, 0, 0, 0.9);
         color: #ffffff;
         font-size: 12px;
-        padding: 2px 8px;
+        font-weight: 600;
+        padding: 2px 10px;
         border-radius: 4px;
-        font-weight: 500;
     }
 
-    .video-info {
-        padding: 14px 16px;
+    .video-info-youtube {
+        padding: 12px 16px;
     }
 
-    .video-title {
+    .video-title-youtube {
         font-weight: 600;
         font-size: 15px;
         line-height: 1.4;
@@ -97,383 +121,361 @@
         overflow: hidden;
     }
 
-    .video-channel {
+    .video-channel-youtube {
         font-size: 13px;
-        color: rgba(255, 255, 255, 0.6);
+        color: #aaaaaa;
         margin-top: 4px;
     }
 
-    .video-meta {
+    .video-meta-youtube {
         font-size: 12px;
-        color: rgba(255, 255, 255, 0.4);
+        color: #888888;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-top: 4px;
     }
 
-    /* Post Card - Full width */
-    .post-card {
-        background: rgba(255, 255, 255, 0.06);
-        backdrop-filter: blur(16px);
-        -webkit-backdrop-filter: blur(16px);
-        border: 1px solid rgba(255, 255, 255, 0.08);
+    /* Post Card - Facebook Style */
+    .post-card-facebook {
+        background: #1a1a1a;
         border-radius: 12px;
         overflow: hidden;
         transition: all 0.3s ease;
-        width: 100%;
     }
 
-    .post-card:hover {
-        background: rgba(255, 255, 255, 0.1);
-        border-color: rgba(255, 255, 255, 0.15);
-    }
-
-    .post-header {
+    .post-header-facebook {
         display: flex;
         align-items: center;
         padding: 14px 16px 8px;
         gap: 12px;
     }
 
-    .post-avatar {
+    .post-avatar-facebook {
         width: 40px;
         height: 40px;
         border-radius: 50%;
+        background: linear-gradient(135deg, #4a4a4a, #2a2a2a);
         display: flex;
         align-items: center;
         justify-content: center;
         font-weight: 600;
         color: white;
         flex-shrink: 0;
-        background: rgba(255, 255, 255, 0.12);
-        border: 1px solid rgba(255, 255, 255, 0.1);
         font-size: 16px;
     }
 
-    .post-user-name {
+    .post-user-name-facebook {
         font-weight: 600;
         font-size: 15px;
         color: #ffffff;
     }
 
-    .post-time {
+    .post-time-facebook {
         font-size: 12px;
-        color: rgba(255, 255, 255, 0.4);
+        color: #888888;
     }
 
-    .post-content {
+    .post-content-facebook {
         padding: 4px 16px 12px;
     }
 
-    .post-title {
-        font-size: 17px;
+    .post-title-facebook {
+        font-size: 18px;
         font-weight: 600;
         color: #ffffff;
-        margin-bottom: 6px;
+        margin-bottom: 8px;
     }
 
-    .post-text {
-        font-size: 14px;
-        color: rgba(255, 255, 255, 0.75);
+    .post-text-facebook {
+        font-size: 15px;
+        color: #dddddd;
         line-height: 1.6;
     }
 
-    .post-image {
+    .post-image-facebook {
         width: 100%;
-        max-height: 450px;
+        max-height: 500px;
         object-fit: cover;
-        margin-top: 10px;
+        margin-top: 12px;
         border-radius: 8px;
     }
 
-    .post-actions {
+    .post-actions-facebook {
         display: flex;
         align-items: center;
         justify-content: space-around;
-        padding: 10px 16px;
+        padding: 8px 16px;
         border-top: 1px solid rgba(255, 255, 255, 0.06);
     }
 
-    .action-btn {
+    .action-btn-facebook {
         display: flex;
         align-items: center;
         gap: 8px;
         padding: 8px 16px;
         border-radius: 8px;
         font-size: 14px;
-        color: rgba(255, 255, 255, 0.5);
+        font-weight: 500;
+        color: #888888;
         transition: all 0.2s ease;
         cursor: pointer;
-        font-weight: 500;
     }
 
-    .action-btn:hover {
-        color: #ffffff;
+    .action-btn-facebook:hover {
         background: rgba(255, 255, 255, 0.08);
-    }
-
-    .action-btn.active {
         color: #ffffff;
-        background: rgba(255, 255, 255, 0.1);
     }
 
-    /* Story Circle */
-    .story-circle {
-        width: 68px;
-        height: 68px;
+    .action-btn-facebook.active {
+        color: #1a73e8;
+    }
+
+    /* Story Circle - Instagram Style */
+    .story-circle-instagram {
+        width: 72px;
+        height: 72px;
         border-radius: 50%;
         padding: 3px;
-        background: rgba(255, 255, 255, 0.15);
+        background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
         flex-shrink: 0;
         cursor: pointer;
+        transition: all 0.2s ease;
     }
 
-    .story-circle-inner {
+    .story-circle-instagram:hover {
+        transform: scale(1.05);
+    }
+
+    .story-circle-inner-instagram {
         width: 100%;
         height: 100%;
         border-radius: 50%;
-        border: 2px solid #0a0a0a;
+        border: 3px solid #0a0a0a;
         display: flex;
         align-items: center;
         justify-content: center;
         font-weight: 600;
-        font-size: 16px;
+        font-size: 14px;
         color: white;
         background: rgba(255, 255, 255, 0.05);
+        overflow: hidden;
     }
 
-    .story-name {
+    .story-circle-inner-instagram img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .story-name-instagram {
         font-size: 11px;
         text-align: center;
         margin-top: 6px;
-        color: rgba(255, 255, 255, 0.5);
-        max-width: 68px;
+        color: #aaaaaa;
+        max-width: 72px;
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
     }
 
-    /* Sidebar */
-    .sidebar-card {
-        background: rgba(255, 255, 255, 0.06);
-        backdrop-filter: blur(16px);
-        -webkit-backdrop-filter: blur(16px);
-        border: 1px solid rgba(255, 255, 255, 0.08);
-        border-radius: 12px;
-        padding: 18px;
-        transition: all 0.3s ease;
+    /* Navigation - YouTube Style */
+    .navbar-youtube {
+        background: rgba(0, 0, 0, 0.95);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        position: sticky;
+        top: 0;
+        z-index: 50;
+        height: 60px;
         width: 100%;
     }
 
-    .sidebar-card:hover {
-        background: rgba(255, 255, 255, 0.09);
+    /* Search Bar - YouTube Style */
+    .search-bar-youtube {
+        display: flex;
+        align-items: center;
+        background: rgba(255, 255, 255, 0.06);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 40px;
+        padding: 0 4px 0 16px;
+        transition: all 0.3s ease;
     }
 
-    .sidebar-title {
-        font-weight: 600;
-        font-size: 15px;
-        color: rgba(255, 255, 255, 0.8);
-        margin-bottom: 14px;
+    .search-bar-youtube:focus-within {
+        border-color: #1a73e8;
+        background: rgba(255, 255, 255, 0.08);
     }
 
-    /* Create Post Bar */
-    .create-bar {
+    .search-bar-youtube input {
+        background: transparent;
+        border: none;
+        outline: none;
+        color: #ffffff;
+        padding: 8px 0;
+        font-size: 14px;
+        width: 100%;
+    }
+
+    .search-bar-youtube input::placeholder {
+        color: #888888;
+    }
+
+    .search-bar-youtube button {
+        background: rgba(255, 255, 255, 0.08);
+        border: none;
+        border-radius: 40px;
+        padding: 8px 20px;
+        color: #ffffff;
+        cursor: pointer;
+        transition: all 0.2s ease;
+    }
+
+    .search-bar-youtube button:hover {
+        background: rgba(255, 255, 255, 0.12);
+    }
+
+    /* Sidebar - YouTube Style */
+    .sidebar-youtube {
+        background: rgba(255, 255, 255, 0.03);
+        border-radius: 12px;
+        padding: 16px;
+        transition: all 0.3s ease;
+    }
+
+    .sidebar-item-youtube {
         display: flex;
         align-items: center;
         gap: 12px;
-        padding: 12px 16px;
-        background: rgba(255, 255, 255, 0.06);
-        backdrop-filter: blur(16px);
-        -webkit-backdrop-filter: blur(16px);
-        border: 1px solid rgba(255, 255, 255, 0.08);
-        border-radius: 12px;
-        width: 100%;
-    }
-
-    .create-input {
-        flex: 1;
-        padding: 10px 18px;
-        border-radius: 9999px;
-        background: rgba(255, 255, 255, 0.06);
-        border: 1px solid rgba(255, 255, 255, 0.06);
-        outline: none;
-        font-size: 14px;
-        color: rgba(255, 255, 255, 0.8);
+        padding: 10px 12px;
+        border-radius: 8px;
+        color: #aaaaaa;
+        transition: all 0.2s ease;
         cursor: pointer;
-        width: 100%;
     }
 
-    .create-input::placeholder {
-        color: rgba(255, 255, 255, 0.3);
+    .sidebar-item-youtube:hover {
+        background: rgba(255, 255, 255, 0.06);
+        color: #ffffff;
     }
 
-    .create-input:focus {
-        border-color: rgba(255, 255, 255, 0.15);
+    .sidebar-item-youtube.active {
+        background: rgba(255, 255, 255, 0.08);
+        color: #ffffff;
     }
 
-    /* Tab */
-    .tab-glass {
-        background: rgba(255, 255, 255, 0.05);
-        backdrop-filter: blur(12px);
-        -webkit-backdrop-filter: blur(12px);
-        border: 1px solid rgba(255, 255, 255, 0.06);
+    /* Tab Navigation - Facebook Style */
+    .tab-nav-facebook {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        background: rgba(255, 255, 255, 0.04);
         border-radius: 12px;
         padding: 4px;
-        display: flex;
-        width: 100%;
     }
 
-    .tab-item {
+    .tab-item-facebook {
         flex: 1;
         display: flex;
         align-items: center;
         justify-content: center;
         gap: 8px;
-        padding: 10px 12px;
+        padding: 10px 16px;
         border-radius: 10px;
         font-size: 14px;
         font-weight: 500;
-        color: rgba(255, 255, 255, 0.35);
+        color: #888888;
         transition: all 0.3s ease;
         cursor: pointer;
     }
 
-    .tab-item:hover {
-        color: rgba(255, 255, 255, 0.7);
-        background: rgba(255, 255, 255, 0.05);
-    }
-
-    .tab-item.active {
-        background: rgba(255, 255, 255, 0.1);
+    .tab-item-facebook:hover {
         color: #ffffff;
     }
 
-    /* Navbar */
-    .navbar-glass {
-        background: rgba(0, 0, 0, 0.6);
-        backdrop-filter: blur(24px);
-        -webkit-backdrop-filter: blur(24px);
-        border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-        width: 100%;
-    }
-
-    /* Input */
-    .glass-input {
-        background: rgba(255, 255, 255, 0.06);
-        backdrop-filter: blur(8px);
-        border: 1px solid rgba(255, 255, 255, 0.06);
-        border-radius: 9999px;
-        padding: 8px 16px 8px 42px;
-        color: #ffffff;
-        width: 100%;
-        outline: none;
-        transition: all 0.3s ease;
-        font-size: 14px;
-    }
-
-    .glass-input::placeholder {
-        color: rgba(255, 255, 255, 0.25);
-    }
-
-    .glass-input:focus {
-        background: rgba(255, 255, 255, 0.1);
-        border-color: rgba(255, 255, 255, 0.15);
-    }
-
-    /* Button */
-    .btn-glass {
+    .tab-item-facebook.active {
         background: rgba(255, 255, 255, 0.08);
-        border: 1px solid rgba(255, 255, 255, 0.08);
-        color: rgba(255, 255, 255, 0.7);
-        padding: 8px 20px;
-        border-radius: 9999px;
-        font-size: 14px;
-        font-weight: 500;
-        transition: all 0.3s ease;
-        cursor: pointer;
-    }
-
-    .btn-glass:hover {
-        background: rgba(255, 255, 255, 0.14);
         color: #ffffff;
     }
 
-    .btn-glass-primary {
-        background: rgba(255, 255, 255, 0.12);
-        border: 1px solid rgba(255, 255, 255, 0.1);
+    /* Button Styles */
+    .btn-primary {
+        background: linear-gradient(135deg, #1a73e8, #1557b0);
+        border: none;
         color: #ffffff;
-    }
-
-    .btn-glass-primary:hover {
-        background: rgba(255, 255, 255, 0.2);
-    }
-
-    /* Badge */
-    .badge-glass {
-        background: rgba(255, 255, 255, 0.06);
-        border: 1px solid rgba(255, 255, 255, 0.06);
-        color: rgba(255, 255, 255, 0.4);
-        padding: 2px 12px;
-        border-radius: 9999px;
-        font-size: 11px;
-        font-weight: 500;
-    }
-
-    /* Trending/Suggested items */
-    .list-item {
-        display: flex;
-        align-items: center;
-        gap: 12px;
-        padding: 8px 10px;
-        border-radius: 8px;
-        transition: all 0.2s ease;
-        cursor: pointer;
-        width: 100%;
-    }
-
-    .list-item:hover {
-        background: rgba(255, 255, 255, 0.06);
-    }
-
-    .list-item-number {
-        color: rgba(255, 255, 255, 0.2);
+        padding: 10px 24px;
+        border-radius: 40px;
         font-weight: 600;
         font-size: 14px;
-        min-width: 24px;
+        transition: all 0.3s ease;
+        cursor: pointer;
     }
 
-    .list-item-text {
-        color: rgba(255, 255, 255, 0.6);
+    .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 20px rgba(26, 115, 232, 0.4);
+    }
+
+    .btn-secondary {
+        background: rgba(255, 255, 255, 0.06);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        color: #ffffff;
+        padding: 10px 24px;
+        border-radius: 40px;
+        font-weight: 600;
         font-size: 14px;
+        transition: all 0.3s ease;
+        cursor: pointer;
     }
 
-    .list-item-text:hover {
-        color: rgba(255, 255, 255, 0.8);
+    .btn-secondary:hover {
+        background: rgba(255, 255, 255, 0.1);
     }
 
-    /* Stats */
-    .stat-item {
-        display: flex;
-        justify-content: space-between;
-        padding: 6px 0;
+    /* Input Styles */
+    .input-modern {
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 12px;
+        padding: 12px 16px;
+        color: #ffffff;
         font-size: 14px;
+        transition: all 0.3s ease;
+        width: 100%;
     }
 
-    .stat-label {
-        color: rgba(255, 255, 255, 0.35);
+    .input-modern:focus {
+        outline: none;
+        border-color: #1a73e8;
+        background: rgba(255, 255, 255, 0.08);
     }
 
-    .stat-value {
-        color: rgba(255, 255, 255, 0.7);
-        font-weight: 500;
+    .input-modern::placeholder {
+        color: #666666;
+    }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar {
+        width: 8px;
+        height: 8px;
+    }
+
+    ::-webkit-scrollbar-track {
+        background: rgba(255, 255, 255, 0.02);
+    }
+
+    ::-webkit-scrollbar-thumb {
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 4px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+        background: rgba(255, 255, 255, 0.2);
     }
 }
 
 @layer utilities {
-    .line-clamp-2 {
-        display: -webkit-box;
-        -webkit-line-clamp: 2;
-        -webkit-box-orient: vertical;
-        overflow: hidden;
-    }
-
     .scrollbar-hide::-webkit-scrollbar {
         display: none;
     }
@@ -482,22 +484,10 @@
         -ms-overflow-style: none;
         scrollbar-width: none;
     }
-}
 
-/* Custom Scrollbar */
-::-webkit-scrollbar {
-    width: 6px;
-}
-
-::-webkit-scrollbar-track {
-    background: rgba(255, 255, 255, 0.02);
-}
-
-::-webkit-scrollbar-thumb {
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 3px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-    background: rgba(255, 255, 255, 0.2);
+    .text-gradient {
+        background: linear-gradient(135deg, #ffffff, #888888);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
 }

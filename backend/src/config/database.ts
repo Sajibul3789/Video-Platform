@@ -5,12 +5,10 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
-// Get the connection string and ensure it's properly formatted
 const connectionString = process.env.DATABASE_URL!;
 
 console.log("📊 Connecting to database...");
 
-// Create a connection pool with explicit configuration
 const pool = new Pool({
   connectionString: connectionString,
   max: 20,
@@ -29,10 +27,7 @@ pool.connect((err, client, release) => {
   release();
 });
 
-// Create Prisma adapter
 const adapter = new PrismaPg(pool);
-
-// Create Prisma Client with adapter
 const prisma = new PrismaClient({
   adapter,
   log: ["query", "info", "warn", "error"],

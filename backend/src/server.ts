@@ -4,6 +4,7 @@ import dotenv from "dotenv";
 import authRoutes from "./routes/authRoutes";
 import videoRoutes from "./routes/videoRoutes";
 import postRoutes from "./routes/postRoutes";
+import path from "path";
 
 dotenv.config();
 
@@ -21,6 +22,9 @@ app.use(
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+// Static files
+app.use("/uploads", express.static(path.join(__dirname, "../uploads")));
 
 // Logging
 app.use((req, res, next) => {
@@ -42,6 +46,7 @@ app.get("/api/test", (req, res) => {
   res.json({
     message: "Backend is working!",
     port: PORT,
+    timestamp: new Date().toISOString(),
   });
 });
 
