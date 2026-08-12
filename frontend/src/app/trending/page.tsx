@@ -3,14 +3,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import {
-  FaFire,
-  FaEye,
-  FaThumbsUp,
-  FaComment,
-  FaPlay,
-  FaTrophy,
-} from "react-icons/fa";
+import { FaFire, FaEye, FaPlay } from "react-icons/fa";
 import api from "@/lib/api";
 import { formatViews, formatDate } from "@/lib/utils";
 
@@ -45,62 +38,76 @@ export default function TrendingPage() {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center min-h-[60vh]">
+      <div className="flex items-center justify-center min-h-[60vh] w-full">
         <div className="animate-spin rounded-full h-12 w-12 border-4 border-white/20 border-t-white/60"></div>
       </div>
     );
   }
 
   return (
-    <div className="max-w-7xl mx-auto px-4 py-6">
-      <div className="flex items-center gap-4 mb-8">
-        <div className="p-3 bg-gradient-to-br from-orange-500 to-red-500 rounded-2xl">
-          <FaFire className="text-white text-3xl" />
+    <div className="w-full px-4 py-4">
+      <div className="w-full max-w-full">
+        <div className="flex items-center gap-4 mb-8">
+          <div className="p-3 bg-gradient-to-br from-orange-500 to-red-500 rounded-2xl">
+            <FaFire className="text-white text-3xl" />
+          </div>
+          <div>
+            <h1 className="text-3xl font-bold text-white">Trending</h1>
+            <p className="text-gray-400 text-sm">
+              Most popular content right now
+            </p>
+          </div>
         </div>
-        <div>
-          <h1 className="text-3xl font-bold text-white">Trending</h1>
-          <p className="text-gray-400 text-sm">
-            Most popular content right now
-          </p>
-        </div>
-      </div>
 
-      <div className="space-y-4">
-        {allContent.map((item: any, index: number) => (
-          <motion.div
-            key={item.id}
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: Math.min(index * 0.05, 0.5) }}
-          >
-            <div className="glass-modern p-4 flex items-center gap-4 hover:bg-white/10 transition">
-              <div className="flex items-center justify-center min-w-[60px]">
-                {index < 3 ? (
-                  <div
-                    className={`text-3xl font-bold ${
-                      index === 0
-                        ? "text-yellow-400"
-                        : index === 1
-                          ? "text-gray-300"
-                          : "text-orange-400"
-                    }`}
-                  >
-                    #{index + 1}
-                  </div>
-                ) : (
-                  <span className="text-xl font-bold text-gray-500">
-                    #{index + 1}
-                  </span>
-                )}
-              </div>
-              {item.type === "video" ? (
-                <TrendingVideoCard video={item} />
-              ) : (
-                <TrendingPostCard post={item} />
-              )}
+        <div className="space-y-4">
+          {allContent.length === 0 ? (
+            <div className="glass-modern p-12 text-center w-full">
+              <div className="text-5xl mb-4 opacity-30">🔥</div>
+              <h3 className="text-xl font-semibold text-white/50">
+                No Trending Content
+              </h3>
+              <p className="text-gray-500 mt-2">
+                Check back later for trending content
+              </p>
             </div>
-          </motion.div>
-        ))}
+          ) : (
+            allContent.map((item: any, index: number) => (
+              <motion.div
+                key={item.id}
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: Math.min(index * 0.05, 0.5) }}
+              >
+                <div className="glass-modern p-4 flex items-center gap-4 hover:bg-white/10 transition">
+                  <div className="flex items-center justify-center min-w-[60px]">
+                    {index < 3 ? (
+                      <div
+                        className={`text-3xl font-bold ${
+                          index === 0
+                            ? "text-yellow-400"
+                            : index === 1
+                              ? "text-gray-300"
+                              : "text-orange-400"
+                        }`}
+                      >
+                        #{index + 1}
+                      </div>
+                    ) : (
+                      <span className="text-xl font-bold text-gray-500">
+                        #{index + 1}
+                      </span>
+                    )}
+                  </div>
+                  {item.type === "video" ? (
+                    <TrendingVideoCard video={item} />
+                  ) : (
+                    <TrendingPostCard post={item} />
+                  )}
+                </div>
+              </motion.div>
+            ))
+          )}
+        </div>
       </div>
     </div>
   );

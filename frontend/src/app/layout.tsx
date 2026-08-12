@@ -1,9 +1,11 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import { Navbar } from "@/components/layout/Navbar";
+import { Sidebar } from "@/components/layout/Sidebar";
+import { MobileBottomNav } from "@/components/layout/MobileBottomNav";
 import { Footer } from "@/components/layout/Footer";
 import { ToastProvider } from "@/components/ui/Toast";
-import Script from "next/script";
+import { HydrationFix } from "@/components/providers/HydrationFix";
 
 export const metadata: Metadata = {
   title: "VideoHub - Share and Discover Amazing Videos",
@@ -45,39 +47,25 @@ export default function RootLayout({
   return (
     <html lang="en" className="dark" suppressHydrationWarning>
       <head>
-        {/* Use Next.js Script component with proper placement */}
-        <Script
-          id="cleanup-bis-skin"
-          strategy="afterInteractive"
+        <script
           dangerouslySetInnerHTML={{
             __html: `
               (function() {
                 if (typeof window !== 'undefined') {
-                  const removeBisSkin = () => {
+                  const removeBisSkin = function() {
                     try {
-                      document.querySelectorAll('[bis_skin_checked]').forEach(el => {
+                      document.querySelectorAll('[bis_skin_checked]').forEach(function(el) {
                         el.removeAttribute('bis_skin_checked');
                       });
-                    } catch (e) {}
+                    } catch(e) {}
                   };
-                  // Run immediately and on events
                   removeBisSkin();
-                  document.addEventListener('DOMContentLoaded', removeBisSkin);
-                  window.addEventListener('load', removeBisSkin);
-                  // Run at intervals
-                  [100, 300, 600, 1000, 2000].forEach(delay => {
-                    setTimeout(removeBisSkin, delay);
-                  });
-                  // Use MutationObserver
-                  if (window.MutationObserver) {
-                    const observer = new MutationObserver(() => removeBisSkin());
-                    observer.observe(document.documentElement, {
-                      attributes: true,
-                      childList: true,
-                      subtree: true,
-                      attributeFilter: ['bis_skin_checked']
-                    });
+                  if (document.readyState === 'loading') {
+                    document.addEventListener('DOMContentLoaded', removeBisSkin);
                   }
+                  window.addEventListener('load', removeBisSkin);
+                  setTimeout(removeBisSkin, 100);
+                  setTimeout(removeBisSkin, 500);
                 }
               })();
             `,
@@ -85,17 +73,36 @@ export default function RootLayout({
         />
       </head>
       <body suppressHydrationWarning>
-        <div className="min-h-screen bg-[#0a0a0a]" suppressHydrationWarning>
-          <ToastProvider />
-          <Navbar />
-          <main
-            className="min-h-screen pt-4 pb-4 w-full"
+        <HydrationFix>
+          <div
+            className="min-h-screen bg-[#0a0a0a] w-full pb-16 lg:pb-0"
             suppressHydrationWarning
           >
-            {children}
-          </main>
-          <Footer />
-        </div>
+            <ToastProvider />
+            <Navbar />
+            <div className="flex w-full" suppressHydrationWarning>
+              {/* Left Sidebar - Desktop only */}
+              <aside
+                className="hidden lg:block w-[240px] xl:w-[280px] flex-shrink-0 px-4 pt-4"
+                suppressHydrationWarning
+              >
+                <Sidebar />
+              </aside>
+
+              {/* Main Content */}
+              <main
+                className="flex-1 min-h-screen w-full lg:w-auto overflow-x-hidden"
+                suppressHydrationWarning
+              >
+                {children}
+              </main>
+            </div>
+            <Footer />
+
+            {/* Mobile Bottom Navigation - Mobile only */}
+            <MobileBottomNav />
+          </div>
+        </HydrationFix>
       </body>
     </html>
   );

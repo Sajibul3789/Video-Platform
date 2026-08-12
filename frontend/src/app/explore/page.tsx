@@ -3,15 +3,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import {
-  FaSearch,
-  FaFire,
-  FaEye,
-  FaThumbsUp,
-  FaComment,
-  FaPlay,
-  FaFilter,
-} from "react-icons/fa";
+import { FaSearch, FaEye, FaPlay } from "react-icons/fa";
 import { IoGrid, IoList } from "react-icons/io5";
 import api from "@/lib/api";
 import { formatViews, formatDate } from "@/lib/utils";
@@ -72,15 +64,15 @@ export default function ExplorePage() {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center min-h-[60vh]">
+      <div className="flex items-center justify-center min-h-[60vh] w-full">
         <div className="animate-spin rounded-full h-12 w-12 border-4 border-white/20 border-t-white/60"></div>
       </div>
     );
   }
 
   return (
-    <div className="full-width py-4">
-      <div className="max-w-7xl mx-auto">
+    <div className="w-full px-4 py-4">
+      <div className="w-full max-w-full">
         {/* Header */}
         <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 mb-6">
           <div>

@@ -52,6 +52,13 @@
         }
     }
 
+    /* No padding container for full-bleed sections */
+    .full-bleed {
+        width: 100%;
+        max-width: 100%;
+        padding: 0;
+    }
+
     /* Modern Glass Card */
     .glass-modern {
         background: rgba(255, 255, 255, 0.05);
@@ -489,5 +496,36 @@
         background: linear-gradient(135deg, #ffffff, #888888);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
+    }
+}
+
+/* Safe area for mobile notched phones */
+@layer utilities {
+    .safe-area-bottom {
+        padding-bottom: env(safe-area-inset-bottom);
+    }
+
+    .safe-area-top {
+        padding-top: env(safe-area-inset-top);
+    }
+}
+
+/* Mobile bottom nav specific styles */
+@media (max-width: 1023px) {
+    .navbar-youtube {
+        /* Slightly reduce navbar height on mobile */
+        height: 56px;
+    }
+
+    /* Add padding to main content to account for bottom nav */
+    main {
+        padding-bottom: 80px;
+    }
+}
+
+/* Fix for mobile viewport */
+@supports (-webkit-touch-callout: none) {
+    .min-h-screen {
+        min-height: -webkit-fill-available;
     }
 }

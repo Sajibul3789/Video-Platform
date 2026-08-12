@@ -13,23 +13,25 @@ const nextConfig = {
       },
       {
         protocol: "http",
-        hostname: "192.168.0.200",
+        hostname: "192.168.0.200", // Replace with your IP
+      },
+      {
+        protocol: "http",
+        hostname: "10.0.0.*", // Allow all 10.x.x.x IPs
+      },
+      {
+        protocol: "http",
+        hostname: "192.168.*", // Allow all 192.168.x.x IPs
       },
     ],
   },
-  allowedDevOrigins: ["192.168.0.200", "localhost", "10.0.0.*", "192.168.*"],
-  // Add this to help with hydration issues
-  experimental: {
-    // This can help with extension-related hydration mismatches
-    optimizeCss: false,
-  },
-  // Suppress hydration warnings for third-party extensions
-  onError: (err, req, res) => {
-    // Ignore hydration errors from browser extensions
-    if (err.message && err.message.includes("bis_skin_checked")) {
-      return;
-    }
-  },
+  // Allow all network origins for development
+  allowedDevOrigins: [
+    "192.168.0.200", // Replace with your IP
+    "localhost",
+    "10.0.0.*",
+    "192.168.*",
+  ],
 };
 
 export default nextConfig;

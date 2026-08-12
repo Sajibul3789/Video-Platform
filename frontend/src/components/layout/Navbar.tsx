@@ -71,8 +71,11 @@ export const Navbar = () => {
   ];
 
   return (
-    <nav className="navbar-youtube">
-      <div className="full-width h-full flex items-center justify-between">
+    <nav className="navbar-youtube" suppressHydrationWarning>
+      <div
+        className="full-width h-full flex items-center justify-between"
+        suppressHydrationWarning
+      >
         {/* Logo */}
         <Link href="/" className="flex items-center gap-2 flex-shrink-0">
           <div className="bg-red-600 p-1.5 rounded-lg">
@@ -102,7 +105,7 @@ export const Navbar = () => {
         </form>
 
         {/* Right Section */}
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2" suppressHydrationWarning>
           <Link
             href="/explore"
             className="md:hidden p-2 hover:bg-white/10 rounded-full transition"
@@ -149,19 +152,7 @@ export const Navbar = () => {
               </button>
             </>
           ) : (
-            <div className="flex items-center gap-2">
-              <Link href="/login">
-                <button className="px-4 py-2 text-white/70 hover:text-white transition text-sm font-medium">
-                  Login
-                </button>
-              </Link>
-              <Link href="/register">
-                <button className="btn-primary text-sm">
-                  <FaUserPlus className="inline mr-2" />
-                  Register
-                </button>
-              </Link>
-            </div>
+            <p></p>
           )}
         </div>
       </div>
