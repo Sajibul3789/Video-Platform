@@ -97,7 +97,7 @@ export default function RootLayout({
                 {children}
               </main>
             </div>
-            <Footer />
+            {/* <Footer /> */}
 
             {/* Mobile Bottom Navigation - Mobile only */}
             <MobileBottomNav />
