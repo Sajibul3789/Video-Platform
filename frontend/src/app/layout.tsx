@@ -80,10 +80,10 @@ export default function RootLayout({
           >
             <ToastProvider />
             <Navbar />
-            <div className="flex w-full" suppressHydrationWarning>
+            <div className="flex w-full relative" suppressHydrationWarning>
               {/* Left Sidebar - Desktop only */}
               <aside
-                className="hidden lg:block w-[240px] xl:w-[280px] flex-shrink-0 px-4 pt-4"
+                className="hidden lg:block flex-shrink-0 relative z-40"
                 suppressHydrationWarning
               >
                 <Sidebar />
@@ -97,7 +97,7 @@ export default function RootLayout({
                 {children}
               </main>
             </div>
-            {/* <Footer /> */}
+            <Footer />
 
             {/* Mobile Bottom Navigation - Mobile only */}
             <MobileBottomNav />

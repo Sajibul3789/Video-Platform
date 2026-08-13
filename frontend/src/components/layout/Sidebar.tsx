@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useState, useEffect } from "react";
 import {
   FaHome,
   FaFire,
@@ -12,6 +13,10 @@ import {
   FaUpload,
   FaCog,
   FaQuestionCircle,
+  FaHistory,
+  FaClock,
+  FaThumbsUp,
+  FaBookmark,
 } from "react-icons/fa";
 import { useAuthStore } from "@/store/authStore";
 
@@ -26,6 +31,12 @@ interface SidebarItem {
 export const Sidebar = () => {
   const pathname = usePathname();
   const { user, isAuthenticated } = useAuthStore();
+  const [isHovered, setIsHovered] = useState(false);
+  const [isVideoPage, setIsVideoPage] = useState(false);
+
+  useEffect(() => {
+    setIsVideoPage(pathname?.startsWith("/video/") || false);
+  }, [pathname]);
 
   const mainItems: SidebarItem[] = [
     { icon: FaHome, label: "Home", href: "/" },
@@ -40,6 +51,10 @@ export const Sidebar = () => {
 
   const userItems: SidebarItem[] = [
     { icon: FaUser, label: "Profile", href: "/profile" },
+    { icon: FaHistory, label: "History", href: "/history" },
+    { icon: FaClock, label: "Watch Later", href: "/watch-later" },
+    { icon: FaThumbsUp, label: "Liked Videos", href: "/liked" },
+    { icon: FaBookmark, label: "Saved", href: "/saved" },
   ];
 
   const adminItems: SidebarItem[] = [
@@ -57,102 +72,99 @@ export const Sidebar = () => {
     return pathname.startsWith(href);
   };
 
-  const renderSidebarItem = (item: SidebarItem) => {
-    const Icon = item.icon;
-    const active = isActive(item.href);
+  // Render a section with divider
+  const renderSection = (
+    items: SidebarItem[],
+    showLabel: boolean,
+    showDivider: boolean = true,
+  ) => {
+    if (items.length === 0) return null;
 
     return (
-      <Link key={item.href} href={item.href}>
-        <div
-          className={`sidebar-item-youtube ${active ? "active" : ""}`}
-          suppressHydrationWarning
-        >
-          <Icon className="text-xl" />
-          <span className="text-sm">{item.label}</span>
+      <>
+        {showDivider && <div className="sidebar-divider"></div>}
+        <div className="sidebar-items">
+          {items.map((item) => {
+            if (item.adminOnly && !user?.isAdmin) return null;
+            const Icon = item.icon;
+            const active = isActive(item.href);
+            return (
+              <Link key={item.href} href={item.href}>
+                <div
+                  className={`sidebar-item-youtube ${active ? "active" : ""}`}
+                  title={!showLabel ? item.label : ""}
+                  suppressHydrationWarning
+                >
+                  <Icon className="sidebar-icon" />
+                  <span
+                    className={`sidebar-label ${!showLabel ? "hidden" : ""}`}
+                  >
+                    {item.label}
+                  </span>
+                </div>
+              </Link>
+            );
+          })}
         </div>
-      </Link>
+      </>
     );
   };
 
-  return (
-    <div
-      className="sidebar-youtube sticky top-20 h-[calc(100vh-80px)] overflow-y-auto scrollbar-hide"
-      suppressHydrationWarning
-    >
-      {/* User Profile */}
+  // Render the sidebar content (shared between both versions)
+  const renderSidebarContent = (showLabels: boolean) => {
+    return (
+      <>
+        {/* User Profile */}
+        <div className="sidebar-user-profile">
+          <div className="sidebar-avatar">
+            {user?.name?.charAt(0).toUpperCase() || "U"}
+          </div>
+          <div className={`sidebar-user-info ${!showLabels ? "hidden" : ""}`}>
+            <p className="sidebar-username">{user?.name || "Guest"}</p>
+            <p className="sidebar-useremail">{user?.email || "Sign in"}</p>
+          </div>
+        </div>
+
+        {/* Main Section */}
+        {renderSection(mainItems, showLabels, false)}
+
+        {/* Content Section */}
+        {renderSection(contentItems, showLabels, true)}
+
+        {/* User Section */}
+        {isAuthenticated && renderSection(userItems, showLabels, true)}
+
+        {/* Admin Section */}
+        {isAuthenticated &&
+          user?.isAdmin &&
+          renderSection(adminItems, showLabels, true)}
+
+        {/* More Section */}
+        {renderSection(moreItems, showLabels, true)}
+
+        {/* Footer */}
+        <div className={`sidebar-footer ${!showLabels ? "hidden" : ""}`}>
+          <p className="sidebar-footer-text">VideoHub v1.0</p>
+          <p className="sidebar-footer-text">© 2024 VideoHub</p>
+        </div>
+      </>
+    );
+  };
+
+  // For video pages - floating sidebar
+  if (isVideoPage) {
+    return (
       <div
-        className="flex items-center gap-3 mb-6 p-2 rounded-lg bg-white/5"
+        className={`video-page-sidebar ${isHovered ? "expanded" : "collapsed"}`}
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
         suppressHydrationWarning
       >
-        <div
-          className="w-12 h-12 rounded-full bg-gradient-to-br from-blue-500 to-purple-500 flex items-center justify-center text-white font-bold text-lg"
-          suppressHydrationWarning
-        >
-          {user?.name?.charAt(0).toUpperCase() || "U"}
-        </div>
-        <div suppressHydrationWarning>
-          <p className="font-semibold text-white">{user?.name || "Guest"}</p>
-          <p className="text-sm text-gray-400">{user?.email || "Sign in"}</p>
-        </div>
+        {renderSidebarContent(isHovered)}
       </div>
+    );
+  }
 
-      {/* Main Section */}
-      <div className="mb-4" suppressHydrationWarning>
-        {mainItems.map(renderSidebarItem)}
-      </div>
-
-      {/* Divider */}
-      <div
-        className="border-t border-white/5 my-4"
-        suppressHydrationWarning
-      ></div>
-
-      {/* Content Section */}
-      <div className="mb-4" suppressHydrationWarning>
-        {contentItems.map(renderSidebarItem)}
-      </div>
-
-      {/* User Section - Only show when authenticated */}
-      {isAuthenticated && (
-        <>
-          <div
-            className="border-t border-white/5 my-4"
-            suppressHydrationWarning
-          ></div>
-          <div className="mb-4" suppressHydrationWarning>
-            {userItems.map(renderSidebarItem)}
-          </div>
-        </>
-      )}
-
-      {/* Admin Section */}
-      {isAuthenticated && user?.isAdmin && (
-        <>
-          <div
-            className="border-t border-white/5 my-4"
-            suppressHydrationWarning
-          ></div>
-          <div className="mb-4" suppressHydrationWarning>
-            {adminItems.map(renderSidebarItem)}
-          </div>
-        </>
-      )}
-
-      {/* More Section */}
-      <div
-        className="border-t border-white/5 my-4"
-        suppressHydrationWarning
-      ></div>
-      <div suppressHydrationWarning>{moreItems.map(renderSidebarItem)}</div>
-
-      {/* Footer */}
-      <div
-        className="mt-6 pt-4 border-t border-white/5"
-        suppressHydrationWarning
-      >
-        <p className="text-xs text-gray-500 px-3">VideoHub v1.0</p>
-        <p className="text-xs text-gray-500 px-3 mt-1">© 2024 VideoHub</p>
-      </div>
-    </div>
-  );
+  // Regular sidebar for non-video pages
+  return <div className="sidebar-youtube">{renderSidebarContent(true)}</div>;
 };

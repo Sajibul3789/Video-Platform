@@ -52,14 +52,13 @@
         }
     }
 
-    /* No padding container for full-bleed sections */
     .full-bleed {
         width: 100%;
         max-width: 100%;
         padding: 0;
     }
 
-    /* Modern Glass Card */
+    /* Glass Card */
     .glass-modern {
         background: rgba(255, 255, 255, 0.05);
         backdrop-filter: blur(20px);
@@ -74,7 +73,7 @@
         border-color: rgba(255, 255, 255, 0.12);
     }
 
-    /* Video Card - YouTube Style */
+    /* Video Card */
     .video-card-youtube {
         background: #1a1a1a;
         border-radius: 12px;
@@ -143,7 +142,7 @@
         margin-top: 4px;
     }
 
-    /* Post Card - Facebook Style */
+    /* Post Card */
     .post-card-facebook {
         background: #1a1a1a;
         border-radius: 12px;
@@ -238,7 +237,7 @@
         color: #1a73e8;
     }
 
-    /* Story Circle - Instagram Style */
+    /* Story Circle */
     .story-circle-instagram {
         width: 72px;
         height: 72px;
@@ -269,12 +268,6 @@
         overflow: hidden;
     }
 
-    .story-circle-inner-instagram img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-    }
-
     .story-name-instagram {
         font-size: 11px;
         text-align: center;
@@ -286,7 +279,7 @@
         white-space: nowrap;
     }
 
-    /* Navigation - YouTube Style */
+    /* Navigation */
     .navbar-youtube {
         background: rgba(0, 0, 0, 0.95);
         backdrop-filter: blur(20px);
@@ -299,7 +292,7 @@
         width: 100%;
     }
 
-    /* Search Bar - YouTube Style */
+    /* Search Bar */
     .search-bar-youtube {
         display: flex;
         align-items: center;
@@ -343,23 +336,20 @@
         background: rgba(255, 255, 255, 0.12);
     }
 
-    /* Sidebar - YouTube Style */
-    .sidebar-youtube {
-        background: rgba(255, 255, 255, 0.03);
-        border-radius: 12px;
-        padding: 16px;
-        transition: all 0.3s ease;
-    }
+    /* ===== SIDEBAR STYLES - UNIFIED ===== */
 
+    /* Base sidebar item - consistent across all pages */
     .sidebar-item-youtube {
         display: flex;
         align-items: center;
-        gap: 12px;
         padding: 10px 12px;
         border-radius: 8px;
         color: #aaaaaa;
-        transition: all 0.2s ease;
+        transition: all 0.15s ease;
         cursor: pointer;
+        white-space: nowrap;
+        min-height: 44px;
+        gap: 12px;
     }
 
     .sidebar-item-youtube:hover {
@@ -372,7 +362,152 @@
         color: #ffffff;
     }
 
-    /* Tab Navigation - Facebook Style */
+    /* Consistent icon size - never changes */
+    .sidebar-icon {
+        font-size: 20px;
+        flex-shrink: 0;
+        width: 24px;
+        text-align: center;
+        color: inherit;
+    }
+
+    /* Consistent label styling */
+    .sidebar-label {
+        font-size: 14px;
+        font-weight: 400;
+        color: inherit;
+    }
+
+    .sidebar-label.hidden {
+        display: none;
+    }
+
+    /* ===== USER PROFILE - UNIFIED ===== */
+    .sidebar-user-profile {
+        display: flex;
+        align-items: center;
+        padding: 8px 12px;
+        margin-bottom: 8px;
+        border-radius: 8px;
+        background: rgba(255, 255, 255, 0.05);
+        gap: 12px;
+        min-height: 56px;
+    }
+
+    .sidebar-avatar {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 600;
+        font-size: 14px;
+        color: white;
+        flex-shrink: 0;
+    }
+
+    .sidebar-user-info {
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+        min-width: 0;
+    }
+
+    .sidebar-user-info.hidden {
+        display: none;
+    }
+
+    .sidebar-username {
+        font-weight: 600;
+        font-size: 14px;
+        color: #ffffff;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .sidebar-useremail {
+        font-size: 12px;
+        color: #888888;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    /* ===== SIDEBAR CONTAINERS ===== */
+
+    /* Regular sidebar - non-video pages */
+    .sidebar-youtube {
+        background: rgba(255, 255, 255, 0.03);
+        border-radius: 12px;
+        padding: 16px 8px;
+        width: 240px;
+        overflow-y: auto;
+        scrollbar-width: thin;
+        position: sticky;
+        top: 80px;
+        max-height: calc(100vh - 100px);
+    }
+
+    /* Video page sidebar - floating - matches regular sidebar when expanded */
+    .video-page-sidebar {
+        position: fixed;
+        left: 0;
+        top: 60px;
+        z-index: 40;
+        height: calc(100vh - 60px);
+        transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        overflow-y: auto;
+        scrollbar-width: thin;
+        background: rgba(0, 0, 0, 0.85);
+        backdrop-filter: blur(20px);
+        padding: 16px 8px;
+    }
+
+    .video-page-sidebar.collapsed {
+        width: 72px;
+    }
+
+    .video-page-sidebar.expanded {
+        width: 240px;
+        background: rgba(0, 0, 0, 0.95);
+        border-right: 1px solid rgba(255, 255, 255, 0.06);
+        box-shadow: 4px 0 30px rgba(0, 0, 0, 0.5);
+    }
+
+    /* ===== SIDEBAR COMPONENTS ===== */
+    .sidebar-items {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+        padding: 0 4px;
+    }
+
+    .sidebar-divider {
+        border-top: 1px solid rgba(255, 255, 255, 0.06);
+        margin: 8px 12px;
+    }
+
+    .sidebar-footer {
+        margin-top: 16px;
+        padding-top: 12px;
+        border-top: 1px solid rgba(255, 255, 255, 0.06);
+        padding-left: 12px;
+    }
+
+    .sidebar-footer.hidden {
+        display: none;
+    }
+
+    .sidebar-footer-text {
+        font-size: 11px;
+        color: #555555;
+        margin: 2px 0;
+    }
+
+    /* Tab Navigation */
     .tab-nav-facebook {
         display: flex;
         align-items: center;
@@ -406,7 +541,7 @@
         color: #ffffff;
     }
 
-    /* Button Styles */
+    /* Buttons */
     .btn-primary {
         background: linear-gradient(135deg, #1a73e8, #1557b0);
         border: none;
@@ -440,7 +575,7 @@
         background: rgba(255, 255, 255, 0.1);
     }
 
-    /* Input Styles */
+    /* Input */
     .input-modern {
         background: rgba(255, 255, 255, 0.05);
         border: 1px solid rgba(255, 255, 255, 0.08);
@@ -480,6 +615,28 @@
     ::-webkit-scrollbar-thumb:hover {
         background: rgba(255, 255, 255, 0.2);
     }
+
+    /* Sidebar scrollbar */
+    .sidebar-youtube::-webkit-scrollbar,
+    .video-page-sidebar::-webkit-scrollbar {
+        width: 4px;
+    }
+
+    .sidebar-youtube::-webkit-scrollbar-track,
+    .video-page-sidebar::-webkit-scrollbar-track {
+        background: transparent;
+    }
+
+    .sidebar-youtube::-webkit-scrollbar-thumb,
+    .video-page-sidebar::-webkit-scrollbar-thumb {
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 2px;
+    }
+
+    .sidebar-youtube::-webkit-scrollbar-thumb:hover,
+    .video-page-sidebar::-webkit-scrollbar-thumb:hover {
+        background: rgba(255, 255, 255, 0.2);
+    }
 }
 
 @layer utilities {
@@ -497,10 +654,7 @@
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
     }
-}
 
-/* Safe area for mobile notched phones */
-@layer utilities {
     .safe-area-bottom {
         padding-bottom: env(safe-area-inset-bottom);
     }
@@ -510,16 +664,19 @@
     }
 }
 
-/* Mobile bottom nav specific styles */
+/* Mobile Styles */
 @media (max-width: 1023px) {
     .navbar-youtube {
-        /* Slightly reduce navbar height on mobile */
         height: 56px;
     }
 
-    /* Add padding to main content to account for bottom nav */
     main {
         padding-bottom: 80px;
+    }
+
+    .sidebar-youtube,
+    .video-page-sidebar {
+        display: none;
     }
 }
 
