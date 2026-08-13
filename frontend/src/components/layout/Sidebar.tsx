@@ -110,11 +110,10 @@ export const Sidebar = () => {
     );
   };
 
-  // Render the sidebar content (shared between both versions)
+  // Render the sidebar content
   const renderSidebarContent = (showLabels: boolean) => {
     return (
       <>
-        {/* User Profile */}
         <div className="sidebar-user-profile">
           <div className="sidebar-avatar">
             {user?.name?.charAt(0).toUpperCase() || "U"}
@@ -125,24 +124,14 @@ export const Sidebar = () => {
           </div>
         </div>
 
-        {/* Main Section */}
         {renderSection(mainItems, showLabels, false)}
-
-        {/* Content Section */}
         {renderSection(contentItems, showLabels, true)}
-
-        {/* User Section */}
         {isAuthenticated && renderSection(userItems, showLabels, true)}
-
-        {/* Admin Section */}
         {isAuthenticated &&
           user?.isAdmin &&
           renderSection(adminItems, showLabels, true)}
-
-        {/* More Section */}
         {renderSection(moreItems, showLabels, true)}
 
-        {/* Footer */}
         <div className={`sidebar-footer ${!showLabels ? "hidden" : ""}`}>
           <p className="sidebar-footer-text">VideoHub v1.0</p>
           <p className="sidebar-footer-text">© 2024 VideoHub</p>
@@ -151,7 +140,7 @@ export const Sidebar = () => {
     );
   };
 
-  // For video pages - floating sidebar
+  // For video pages - ALWAYS fixed, content has padding
   if (isVideoPage) {
     return (
       <div

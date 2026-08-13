@@ -336,7 +336,7 @@
         background: rgba(255, 255, 255, 0.12);
     }
 
-    /* ===== SIDEBAR STYLES - UNIFIED ===== */
+    /* ===== SIDEBAR STYLES ===== */
 
     /* Base sidebar item - consistent across all pages */
     .sidebar-item-youtube {
@@ -362,7 +362,6 @@
         color: #ffffff;
     }
 
-    /* Consistent icon size - never changes */
     .sidebar-icon {
         font-size: 20px;
         flex-shrink: 0;
@@ -371,7 +370,6 @@
         color: inherit;
     }
 
-    /* Consistent label styling */
     .sidebar-label {
         font-size: 14px;
         font-weight: 400;
@@ -382,7 +380,7 @@
         display: none;
     }
 
-    /* ===== USER PROFILE - UNIFIED ===== */
+    /* User Profile - Unified */
     .sidebar-user-profile {
         display: flex;
         align-items: center;
@@ -436,48 +434,7 @@
         text-overflow: ellipsis;
     }
 
-    /* ===== SIDEBAR CONTAINERS ===== */
-
-    /* Regular sidebar - non-video pages */
-    .sidebar-youtube {
-        background: rgba(255, 255, 255, 0.03);
-        border-radius: 12px;
-        padding: 16px 8px;
-        width: 240px;
-        overflow-y: auto;
-        scrollbar-width: thin;
-        position: sticky;
-        top: 80px;
-        max-height: calc(100vh - 100px);
-    }
-
-    /* Video page sidebar - floating - matches regular sidebar when expanded */
-    .video-page-sidebar {
-        position: fixed;
-        left: 0;
-        top: 60px;
-        z-index: 40;
-        height: calc(100vh - 60px);
-        transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        overflow-y: auto;
-        scrollbar-width: thin;
-        background: rgba(0, 0, 0, 0.85);
-        backdrop-filter: blur(20px);
-        padding: 16px 8px;
-    }
-
-    .video-page-sidebar.collapsed {
-        width: 72px;
-    }
-
-    .video-page-sidebar.expanded {
-        width: 240px;
-        background: rgba(0, 0, 0, 0.95);
-        border-right: 1px solid rgba(255, 255, 255, 0.06);
-        box-shadow: 4px 0 30px rgba(0, 0, 0, 0.5);
-    }
-
-    /* ===== SIDEBAR COMPONENTS ===== */
+    /* Sidebar Components */
     .sidebar-items {
         display: flex;
         flex-direction: column;
@@ -505,6 +462,60 @@
         font-size: 11px;
         color: #555555;
         margin: 2px 0;
+    }
+
+    /* ===== SIDEBAR CONTAINERS ===== */
+
+    /* Regular sidebar - non-video pages (takes up space) */
+    .sidebar-youtube {
+        background: rgba(255, 255, 255, 0.03);
+        border-radius: 12px;
+        padding: 16px 8px;
+        width: 240px;
+        overflow-y: auto;
+        scrollbar-width: thin;
+        position: sticky;
+        top: 80px;
+        max-height: calc(100vh - 100px);
+    }
+
+    /* Video page sidebar - ALWAYS fixed, content has padding */
+    .video-page-sidebar {
+        position: fixed;
+        left: 0;
+        top: 60px;
+        z-index: 40;
+        height: calc(100vh - 60px);
+        transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        overflow-y: auto;
+        scrollbar-width: thin;
+        padding: 16px 8px;
+        background: rgba(0, 0, 0, 0.85);
+        backdrop-filter: blur(20px);
+    }
+
+    .video-page-sidebar.collapsed {
+        width: 72px;
+        background: rgba(0, 0, 0, 0.85);
+    }
+
+    .video-page-sidebar.expanded {
+        width: 240px;
+        background: rgba(0, 0, 0, 0.95);
+        border-right: 1px solid rgba(255, 255, 255, 0.06);
+        box-shadow: 4px 0 30px rgba(0, 0, 0, 0.5);
+        z-index: 50;
+    }
+
+    /* Video page content - always has left padding */
+    .video-page-content {
+        padding-left: 72px;
+        transition: padding-left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    /* When sidebar is expanded, content padding stays the same */
+    .video-page-sidebar.expanded~.video-page-content {
+        padding-left: 72px;
     }
 
     /* Tab Navigation */
@@ -677,6 +688,10 @@
     .sidebar-youtube,
     .video-page-sidebar {
         display: none;
+    }
+
+    .video-page-content {
+        padding-left: 0 !important;
     }
 }
 
